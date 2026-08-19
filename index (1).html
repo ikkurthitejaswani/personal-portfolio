@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ikkurthi Tejaswani — Frontend Developer &amp; UI/UX Designer</title>
+<meta name="description" content="Portfolio of Ikkurthi Tejaswani, Information Technology student, frontend developer and UI/UX designer.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-void:#09090b;
+    --bg-panel:#111114;
+    --bg-surface:#18181b;
+    --line:#27272a;
+    --line-soft:#1f1f23;
+    --ink:#fafafa;
+    --ink-dim:#a1a1aa;
+    --ink-faint:#6b6b72;
+    --emerald:#34d399;
+    --emerald-deep:#10b981;
+    --indigo:#818cf8;
+  }
+  *{box-sizing:border-box;}
+  html,body{background:var(--bg-void); color:var(--ink);}
+  body{font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3, .font-display{font-family:'Space Grotesk',sans-serif;}
+  .font-mono{font-family:'JetBrains Mono',monospace;}
+
+  /* grid backdrop, evokes schematic / sensor grid */
+  .grid-field{
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 42px 42px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  .glass{
+    background: rgba(24,24,27,0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .card{
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    transition: border-color .25s ease, transform .25s ease, background .25s ease;
+  }
+  .card:hover{
+    border-color: rgba(52,211,153,0.35);
+    transform: translateY(-3px);
+  }
+
+  .glow-text{
+    background: linear-gradient(100deg, #6ee7b7 0%, #34d399 45%, #818cf8 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color: transparent;
+  }
+
+  .status-dot{
+    width:8px;height:8px;border-radius:9999px;background:var(--emerald);
+    box-shadow: 0 0 0 0 rgba(52,211,153,0.6);
+    animation: pulse-ring 2.2s cubic-bezier(0.4,0,0.6,1) infinite;
+  }
+  @keyframes pulse-ring{
+    0%{ box-shadow: 0 0 0 0 rgba(52,211,153,0.55); }
+    70%{ box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+  }
+
+  .nav-link{ position:relative; color:var(--ink-dim); transition:color .2s ease; }
+  .nav-link::after{
+    content:''; position:absolute; left:0; bottom:-6px; width:0%; height:1px;
+    background: var(--emerald); transition: width .25s ease;
+  }
+  .nav-link:hover, .nav-link.active{ color: var(--ink); }
+  .nav-link.active::after, .nav-link:hover::after{ width:100%; }
+
+  .chip{
+    border:1px solid var(--line); background: var(--bg-surface);
+    color: var(--ink-dim); font-family:'JetBrains Mono',monospace;
+    transition: all .2s ease;
+  }
+  .chip:hover{ border-color: rgba(52,211,153,0.45); color: var(--ink); }
+
+  .btn-primary{
+    background: linear-gradient(120deg, var(--emerald-deep), #22c55e);
+    color:#052e1a; font-weight:600;
+    box-shadow: 0 0 0 1px rgba(52,211,153,0.15), 0 8px 24px -8px rgba(16,185,129,0.55);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(52,211,153,0.3), 0 14px 30px -10px rgba(16,185,129,0.7); }
+
+  .btn-secondary{
+    border:1px solid var(--line); color: var(--ink);
+    transition: border-color .2s ease, background .2s ease, transform .2s ease;
+  }
+  .btn-secondary:hover{ border-color: var(--ink-faint); background: rgba(255,255,255,0.03); transform: translateY(-2px); }
+
+  .timeline-line{ background: linear-gradient(to bottom, transparent, var(--line) 8%, var(--line) 92%, transparent); }
+  .timeline-node{
+    width:11px;height:11px;border-radius:9999px; background: var(--bg-void);
+    border: 2px solid var(--emerald);
+  }
+  .timeline-node.edu{ border-color: var(--indigo); }
+
+  input, textarea{
+    background: var(--bg-panel); border:1px solid var(--line); color: var(--ink);
+  }
+  input:focus, textarea:focus{
+    outline:none; border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(52,211,153,0.12);
+  }
+  input::placeholder, textarea::placeholder{ color: var(--ink-faint); }
+
+  ::selection{ background: rgba(52,211,153,0.35); color:#fff; }
+
+  @media (prefers-reduced-motion: reduce){
+    .status-dot{ animation:none; }
+    *{ scroll-behavior:auto !important; }
+  }
+
+  .reveal{ opacity:0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  .terminal-caret::after{
+    content:'▍'; color: var(--emerald); animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ============ NAVBAR ============ -->
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 border-b border-transparent">
+  <nav class="glass max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-4 border-b border-[var(--line-soft)]">
+    <a href="#top" class="font-display font-semibold text-lg tracking-tight flex items-center gap-2">
+      <span class="status-dot"></span>
+      Tejaswani<span class="text-[var(--emerald)]">.</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm font-mono">
+      <a href="#about" class="nav-link">about</a>
+      <a href="#stack" class="nav-link">stack</a>
+      <a href="#projects" class="nav-link">projects</a>
+      <a href="#timeline" class="nav-link">timeline</a>
+      <a href="#contact" class="nav-link">contact</a>
+    </div>
+    <a href="#contact" class="hidden md:inline-block btn-primary text-sm px-4 py-2 rounded-md">Let's talk</a>
+    <button id="burger" aria-label="Toggle menu" aria-expanded="false" class="md:hidden text-[var(--ink)] p-2 -mr-2">
+      <svg id="burger-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </nav>
+  <div id="mobile-menu" class="md:hidden hidden glass border-b border-[var(--line-soft)] px-6 py-4 flex flex-col gap-4 font-mono text-sm">
+    <a href="#about" class="nav-link">about</a>
+    <a href="#stack" class="nav-link">stack</a>
+    <a href="#projects" class="nav-link">projects</a>
+    <a href="#timeline" class="nav-link">timeline</a>
+    <a href="#contact" class="nav-link">contact</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
+  <div class="absolute inset-0 grid-field pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-6 md:px-10 w-full grid lg:grid-cols-[1.15fr_0.85fr] gap-14 items-center relative z-10">
+
+    <div class="reveal">
+      <div class="inline-flex items-center gap-2 border border-[var(--line)] rounded-full px-3 py-1.5 text-xs font-mono text-[var(--ink-dim)] mb-6">
+        <span class="status-dot"></span>
+        available for internships &amp; junior roles
+      </div>
+      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.08] tracking-tight">
+        Building responsive digital experiences <span class="glow-text">&amp; smart systems</span>
+      </h1>
+      <p class="mt-6 text-[var(--ink-dim)] text-base sm:text-lg max-w-xl leading-relaxed">
+        Information Technology student from Guntur with hands-on exposure to frontend development,
+        IoT-based monitoring platforms, and UI/UX engineering — turning coursework into working products,
+        one interface at a time.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-4">
+        <a href="#projects" class="btn-primary rounded-md px-6 py-3 text-sm">View my work</a>
+        <a href="Ikkurthi_Tejaswani_Resume.pdf" download class="btn-secondary rounded-md px-6 py-3 text-sm flex items-center gap-2">
+          Download resume
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+        </a>
+      </div>
+      <div class="mt-12 flex items-center gap-6 text-[var(--ink-faint)] text-sm font-mono">
+        <span>Guntur, Andhra Pradesh</span>
+        <span class="w-1 h-1 rounded-full bg-[var(--line)]"></span>
+        <span>B.Tech IT · 2025–2028</span>
+      </div>
+    </div>
+
+    <!-- Signature element: live "system status" panel, echoing her IoT dashboard work -->
+    <div class="reveal">
+      <div class="card rounded-2xl p-6 font-mono text-sm relative">
+        <div class="flex items-center justify-between border-b border-[var(--line)] pb-4 mb-4">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></span>
+          </div>
+          <span class="text-[var(--ink-faint)] text-xs">status.log</span>
+        </div>
+        <div class="space-y-3 text-[var(--ink-dim)]">
+          <div class="flex justify-between"><span class="text-[var(--ink-faint)]">operator</span><span class="text-[var(--ink)]">ikkurthi_tejaswani</span></div>
+          <div class="flex justify-between"><span class="text-[var(--ink-faint)]">role</span><span class="text-[var(--ink)]">frontend · ui/ux</span></div>
+          <div class="flex justify-between"><span class="text-[var(--ink-faint)]">focus</span><span class="text-[var(--ink)]">web + iot systems</span></div>
+          <div class="flex justify-between"><span class="text-[var(--ink-faint)]">education</span><span class="text-[var(--ink)]">CGPA 8.9/10.0</span></div>
+          <div class="pt-3 mt-1 border-t border-[var(--line)]">
+            <div class="text-[var(--ink-faint)] mb-2">live_projects</div>
+            <div class="flex items-center justify-between py-1.5">
+              <span class="text-[var(--ink)]">ecommerce-ui</span>
+              <span class="text-[var(--emerald)] text-xs">● shipped</span>
+            </div>
+            <div class="flex items-center justify-between py-1.5">
+              <span class="text-[var(--ink)]">green-campus-iot</span>
+              <span class="text-[var(--emerald)] text-xs">● shipped</span>
+            </div>
+            <div class="flex items-center justify-between py-1.5">
+              <span class="text-[var(--ink)]">hostelmate-prototype</span>
+              <span class="text-[var(--indigo)] text-xs">● in figma</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-5 pt-4 border-t border-[var(--line)] text-[var(--ink-faint)] text-xs">
+          <span class="text-[var(--emerald)]">&gt;</span> ready to contribute<span class="terminal-caret"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ ABOUT & STRENGTHS ============ -->
+<section id="about" class="py-24 md:py-32 border-t border-[var(--line-soft)]">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-14 items-start">
+      <div class="reveal">
+        <span class="font-mono text-xs text-[var(--emerald)] tracking-widest uppercase">01 — About</span>
+        <h2 class="font-display text-3xl md:text-4xl font-semibold mt-4 leading-tight">
+          A builder who learns fast and adapts faster.
+        </h2>
+        <p class="mt-6 text-[var(--ink-dim)] leading-relaxed">
+          I'm an Information Technology student pursuing my B.Tech after completing a Diploma in
+          Computer Engineering with a CGPA of 8.9/10.0. Alongside coursework, I've built a responsive
+          e-commerce interface, an IoT-based campus monitoring dashboard, and a mobile app prototype
+          for hostel management — each one a chance to move from theory to a working, usable product.
+        </p>
+        <p class="mt-4 text-[var(--ink-dim)] leading-relaxed">
+          A one-month internship at CodeAlpha gave me a first look at a professional IT environment,
+          and sharpened how I communicate and collaborate across a team. I'm most comfortable at the
+          intersection of clean code and clear design — where a good interface makes a system easier
+          to trust.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4 reveal">
+        <div class="card rounded-xl p-6">
+          <div class="w-9 h-9 rounded-lg bg-[var(--bg-surface)] border border-[var(--line)] flex items-center justify-center mb-4">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <h3 class="font-display font-semibold">Problem Solving</h3>
+          <p class="text-sm text-[var(--ink-dim)] mt-2 leading-relaxed">Breaking down ambiguous requirements into working, testable interfaces.</p>
+        </div>
+        <div class="card rounded-xl p-6">
+          <div class="w-9 h-9 rounded-lg bg-[var(--bg-surface)] border border-[var(--line)] flex items-center justify-center mb-4">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/></svg>
+          </div>
+          <h3 class="font-display font-semibold">Quick Learning</h3>
+          <p class="text-sm text-[var(--ink-dim)] mt-2 leading-relaxed">Picking up new stacks fast — from Flask to Figma — as projects demand.</p>
+        </div>
+        <div class="card rounded-xl p-6">
+          <div class="w-9 h-9 rounded-lg bg-[var(--bg-surface)] border border-[var(--line)] flex items-center justify-center mb-4">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="font-display font-semibold">Teamwork</h3>
+          <p class="text-sm text-[var(--ink-dim)] mt-2 leading-relaxed">Comfortable coordinating across design, frontend, and backend roles.</p>
+        </div>
+        <div class="card rounded-xl p-6">
+          <div class="w-9 h-9 rounded-lg bg-[var(--bg-surface)] border border-[var(--line)] flex items-center justify-center mb-4">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><path d="M16 8L2 22M17.5 15H9"/></svg>
+          </div>
+          <h3 class="font-display font-semibold">Adaptability</h3>
+          <p class="text-sm text-[var(--ink-dim)] mt-2 leading-relaxed">Equally at ease writing C++ logic or designing a Figma user flow.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TECH STACK ============ -->
+<section id="stack" class="py-24 md:py-32 border-t border-[var(--line-soft)] relative">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div class="reveal mb-14 max-w-2xl">
+      <span class="font-mono text-xs text-[var(--emerald)] tracking-widest uppercase">02 — Stack</span>
+      <h2 class="font-display text-3xl md:text-4xl font-semibold mt-4">Technical stack</h2>
+      <p class="mt-4 text-[var(--ink-dim)]">Tools and languages I reach for across web, data, and design work.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <div class="card rounded-xl p-6 reveal">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-mono text-xs text-[var(--ink-faint)] uppercase tracking-wider">Languages</h3>
+          <span class="status-dot"></span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip rounded-md px-3 py-1.5 text-xs">C</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">C++</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">Java</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">Python</span>
+        </div>
+      </div>
+
+      <div class="card rounded-xl p-6 reveal">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-mono text-xs text-[var(--ink-faint)] uppercase tracking-wider">Web Technologies</h3>
+          <span class="status-dot"></span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip rounded-md px-3 py-1.5 text-xs">HTML</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">CSS</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">JavaScript</span>
+        </div>
+      </div>
+
+      <div class="card rounded-xl p-6 reveal">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-mono text-xs text-[var(--ink-faint)] uppercase tracking-wider">Frameworks</h3>
+          <span class="status-dot"></span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip rounded-md px-3 py-1.5 text-xs">Python Flask</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">Tailwind CSS</span>
+        </div>
+      </div>
+
+      <div class="card rounded-xl p-6 reveal">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-mono text-xs text-[var(--ink-faint)] uppercase tracking-wider">Databases</h3>
+          <span class="status-dot"></span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip rounded-md px-3 py-1.5 text-xs">SQL</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">MySQL</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">SQLite</span>
+        </div>
+      </div>
+
+      <div class="card rounded-xl p-6 reveal">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-mono text-xs text-[var(--ink-faint)] uppercase tracking-wider">UI/UX Tools</h3>
+          <span class="status-dot"></span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip rounded-md px-3 py-1.5 text-xs">Figma</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">Wireframing</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">Prototyping</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">User Research</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">Design Systems</span>
+        </div>
+      </div>
+
+      <div class="card rounded-xl p-6 reveal">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-mono text-xs text-[var(--ink-faint)] uppercase tracking-wider">Developer Tools</h3>
+          <span class="status-dot"></span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip rounded-md px-3 py-1.5 text-xs">GitHub</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">VS Code</span>
+          <span class="chip rounded-md px-3 py-1.5 text-xs">Microsoft Office</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects" class="py-24 md:py-32 border-t border-[var(--line-soft)]">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div class="reveal mb-14 max-w-2xl">
+      <span class="font-mono text-xs text-[var(--emerald)] tracking-widest uppercase">03 — Projects</span>
+      <h2 class="font-display text-3xl md:text-4xl font-semibold mt-4">Selected work</h2>
+      <p class="mt-4 text-[var(--ink-dim)]">Academic and practical projects spanning web, IoT, and product design.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-6">
+
+      <article class="card rounded-2xl p-7 flex flex-col reveal">
+        <div class="flex items-center justify-between mb-5">
+          <span class="font-mono text-xs text-[var(--ink-faint)] uppercase tracking-wider">Web Development</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold">E-Commerce Website</h3>
+        <p class="text-sm text-[var(--ink-dim)] mt-3 leading-relaxed flex-1">
+          A responsive e-commerce interface with product browsing, integrated search, and dynamic UI logic.
+          Front end built with HTML, CSS, and JavaScript; product and inventory data managed with MySQL.
+        </p>
+        <div class="flex flex-wrap gap-2 mt-6">
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">HTML</span>
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">CSS</span>
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">JavaScript</span>
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">MySQL</span>
+        </div>
+        <div class="flex items-center gap-4 mt-6 pt-5 border-t border-[var(--line)] text-xs font-mono text-[var(--ink-faint)]">
+          <span class="flex items-center gap-1.5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> GitHub — coming soon</span>
+          <span class="flex items-center gap-1.5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3h7v7M10 14L21 3M5 5h6a2 2 0 0 1 2 2v0M19 19v-6a2 2 0 0 0-2-2h0M5 5v14h14"/></svg> Live demo — coming soon</span>
+        </div>
+      </article>
+
+      <article class="card rounded-2xl p-7 flex flex-col reveal">
+        <div class="flex items-center justify-between mb-5">
+          <span class="font-mono text-xs text-[var(--ink-faint)] uppercase tracking-wider">IoT / Web Development</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold">Green Campus Monitoring System</h3>
+        <p class="text-sm text-[var(--ink-dim)] mt-3 leading-relaxed flex-1">
+          An IoT-based environmental monitoring platform tracking campus energy usage, air quality, and
+          live water levels, with a central dashboard built in Python Flask and data managed via SQLite.
+        </p>
+        <div class="flex flex-wrap gap-2 mt-6">
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">HTML</span>
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">CSS</span>
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">JavaScript</span>
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">Tailwind CSS</span>
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">Python Flask</span>
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">SQLite</span>
+        </div>
+        <div class="flex items-center gap-4 mt-6 pt-5 border-t border-[var(--line)] text-xs font-mono text-[var(--ink-faint)]">
+          <span class="flex items-center gap-1.5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg> GitHub — coming soon</span>
+          <span class="flex items-center gap-1.5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3h7v7M10 14L21 3M5 5h6a2 2 0 0 1 2 2v0M19 19v-6a2 2 0 0 0-2-2h0M5 5v14h14"/></svg> Live demo — coming soon</span>
+        </div>
+      </article>
+
+      <article class="card rounded-2xl p-7 flex flex-col reveal">
+        <div class="flex items-center justify-between mb-5">
+          <span class="font-mono text-xs text-[var(--ink-faint)] uppercase tracking-wider">UI/UX Design</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold">HostelMate</h3>
+        <p class="text-sm text-[var(--ink-dim)] mt-3 leading-relaxed flex-1">
+          An interactive mobile app prototype for streamlined hostel administration — custom user flows
+          for room booking, maintenance requests, and digital mess passes, grounded in user research.
+        </p>
+        <div class="flex flex-wrap gap-2 mt-6">
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">Figma</span>
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">Wireframing</span>
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">Prototyping</span>
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">User Research</span>
+          <span class="chip rounded-md px-2.5 py-1 text-[11px]">Design Systems</span>
+        </div>
+        <div class="flex items-center gap-4 mt-6 pt-5 border-t border-[var(--line)] text-xs font-mono text-[var(--ink-faint)]">
+          <span class="flex items-center gap-1.5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3h7v7M10 14L21 3M5 5h6a2 2 0 0 1 2 2v0M19 19v-6a2 2 0 0 0-2-2h0M5 5v14h14"/></svg> Figma prototype — coming soon</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section id="timeline" class="py-24 md:py-32 border-t border-[var(--line-soft)]">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div class="reveal mb-16 max-w-2xl">
+      <span class="font-mono text-xs text-[var(--emerald)] tracking-widest uppercase">04 — Timeline</span>
+      <h2 class="font-display text-3xl md:text-4xl font-semibold mt-4">Experience &amp; education</h2>
+      <p class="mt-4 text-[var(--ink-dim)]">A chronological record — <span class="text-[var(--emerald)]">●</span> experience, <span class="text-[var(--indigo)]">●</span> education.</p>
+    </div>
+
+    <div class="relative pl-8">
+      <div class="timeline-line absolute left-[3px] top-0 bottom-0 w-px"></div>
+
+      <div class="relative pb-12 reveal">
+        <div class="timeline-node absolute -left-8 top-1.5"></div>
+        <span class="font-mono text-xs text-[var(--emerald)]">2025 — 2028</span>
+        <h3 class="font-display text-lg font-semibold mt-1">B.Tech in Information Technology</h3>
+        <p class="text-sm text-[var(--ink-dim)] mt-2 max-w-xl leading-relaxed">Currently pursuing a Bachelor of Technology, building on a foundation from the Diploma in Computer Engineering. Present milestone.</p>
+      </div>
+
+      <div class="relative pb-12 reveal">
+        <div class="timeline-node absolute -left-8 top-1.5"></div>
+        <span class="font-mono text-xs text-[var(--emerald)]">CodeAlpha · 1 Month</span>
+        <h3 class="font-display text-lg font-semibold mt-1">Intern — CodeAlpha</h3>
+        <p class="text-sm text-[var(--ink-dim)] mt-2 max-w-xl leading-relaxed">Gained practical exposure to a professional IT environment, strengthened programming workflows through hands-on tasks, and sharpened cross-team communication.</p>
+      </div>
+
+      <div class="relative pb-12 reveal">
+        <div class="timeline-node edu absolute -left-8 top-1.5"></div>
+        <span class="font-mono text-xs text-[var(--indigo)]">2022 — 2025</span>
+        <h3 class="font-display text-lg font-semibold mt-1">Diploma in Computer Engineering</h3>
+        <p class="text-sm text-[var(--ink-dim)] mt-2 max-w-xl leading-relaxed">Graduated with an outstanding CGPA of <span class="text-[var(--ink)] font-medium">8.9 / 10.0</span>, building core foundations in programming and systems.</p>
+      </div>
+
+      <div class="relative reveal">
+        <div class="timeline-node edu absolute -left-8 top-1.5"></div>
+        <span class="font-mono text-xs text-[var(--indigo)]">2021 — 2022</span>
+        <h3 class="font-display text-lg font-semibold mt-1">Secondary School</h3>
+        <p class="text-sm text-[var(--ink-dim)] mt-2 max-w-xl leading-relaxed">Completed with a GPA of <span class="text-[var(--ink)] font-medium">7.9 / 10.0</span>.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="py-24 md:py-32 border-t border-[var(--line-soft)] relative">
+  <div class="absolute inset-0 grid-field pointer-events-none opacity-60"></div>
+  <div class="max-w-7xl mx-auto px-6 md:px-10 relative z-10">
+    <div class="grid lg:grid-cols-2 gap-14">
+
+      <div class="reveal">
+        <span class="font-mono text-xs text-[var(--emerald)] tracking-widest uppercase">05 — Contact</span>
+        <h2 class="font-display text-3xl md:text-4xl font-semibold mt-4 leading-tight">Let's build something worth shipping.</h2>
+        <p class="mt-6 text-[var(--ink-dim)] leading-relaxed max-w-md">
+          Open to internships and junior frontend or UI/UX roles. Reach out directly or send a
+          message through the form — I read everything.
+        </p>
+
+        <div class="mt-8 space-y-4 font-mono text-sm">
+          <a href="mailto:ikkurthitejaswani2006@gmail.com" class="flex items-center gap-3 text-[var(--ink-dim)] hover:text-[var(--emerald)] transition-colors w-fit">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+            ikkurthitejaswani2006@gmail.com
+          </a>
+          <div class="flex items-center gap-3 text-[var(--ink-dim)]">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +91 78936 48714
+          </div>
+          <div class="flex items-center gap-3 text-[var(--ink-dim)]">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Guntur, Andhra Pradesh
+          </div>
+        </div>
+
+        <div class="flex gap-3 mt-8">
+          <a href="#" class="btn-secondary rounded-lg w-10 h-10 flex items-center justify-center" aria-label="GitHub profile">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.79-.25.79-.55v-2.13c-3.2.69-3.87-1.36-3.87-1.36-.52-1.32-1.28-1.67-1.28-1.67-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.8 0c2.2-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.77.11 3.06.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.41-5.27 5.7.42.36.78 1.07.78 2.16v3.2c0 .3.21.66.79.55C20.71 21.39 24 17.09 24 12c0-6.27-5.23-11.5-12-11.5z"/></svg>
+          </a>
+          <a href="#" class="btn-secondary rounded-lg w-10 h-10 flex items-center justify-center" aria-label="LinkedIn profile">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="card rounded-2xl p-7 reveal">
+        <form id="contact-form" class="space-y-5">
+          <div>
+            <label for="name" class="block text-xs font-mono text-[var(--ink-faint)] uppercase tracking-wider mb-2">Name</label>
+            <input id="name" name="name" type="text" required placeholder="Your name" class="w-full rounded-lg px-4 py-3 text-sm">
+          </div>
+          <div>
+            <label for="email" class="block text-xs font-mono text-[var(--ink-faint)] uppercase tracking-wider mb-2">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@example.com" class="w-full rounded-lg px-4 py-3 text-sm">
+          </div>
+          <div>
+            <label for="message" class="block text-xs font-mono text-[var(--ink-faint)] uppercase tracking-wider mb-2">Message</label>
+            <textarea id="message" name="message" rows="4" required placeholder="What are you working on?" class="w-full rounded-lg px-4 py-3 text-sm resize-none"></textarea>
+          </div>
+          <button type="submit" class="btn-primary w-full rounded-lg px-6 py-3 text-sm">Send message</button>
+          <p class="text-xs text-[var(--ink-faint)] text-center font-mono">Opens your email client — no data is stored.</p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-[var(--line-soft)] py-10">
+  <div class="max-w-7xl mx-auto px-6 md:px-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[var(--ink-faint)] font-mono">
+    <span>© 2026 Ikkurthi Tejaswani. Built with intent.</span>
+    <span class="flex items-center gap-2"><span class="status-dot"></span> systems nominal</span>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  burger.addEventListener('click', () => {
+    const isOpen = !mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden');
+    burger.setAttribute('aria-expanded', String(!isOpen));
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+  // Navbar background on scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('border-b', window.scrollY > 8);
+  });
+
+  // Active section highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const setActive = () => {
+    let current = '';
+    sections.forEach(sec => {
+      const top = sec.offsetTop - 120;
+      if (window.scrollY >= top) current = sec.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  };
+  window.addEventListener('scroll', setActive);
+  setActive();
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Contact form -> mailto fallback
+  document.getElementById('contact-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    const subject = encodeURIComponent('Portfolio contact from ' + name);
+    const body = encodeURIComponent(message + '\n\n— ' + name + ' (' + email + ')');
+    window.location.href = `mailto:ikkurthitejaswani2006@gmail.com?subject=${subject}&body=${body}`;
+  });
+</script>
+</body>
+</html>
